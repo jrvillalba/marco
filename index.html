@@ -1233,8 +1233,9 @@ async function normasImportCSV(event) {
   for(let i=1;i<lines.length;i++){
     const cols=parseLine(lines[i]);
     const g=k=>cm[k]>=0?(cols[cm[k]]||'').replace(/^"|"$/g,'').trim():'';
-    if(!g('codigo')||!g('titulo')||!g('area')||!g('tipo'))continue;
-    rows.push({codigo:g('codigo'),titulo:g('titulo'),area:g('area'),tipo:g('tipo'),estado:g('estado')||'Vigente',version:g('version')||null,fecha:g('fecha')||null,owner:g('owner')||null,revision:g('revision')||null,regulacion:g('regulacion')||null,link:g('link')||null,notas:g('notas')||null});
+    if(!g('titulo'))continue; // solo título es obligatorio
+    const cod=g('codigo')||g('titulo').slice(0,20).replace(/\s+/g,'-').toUpperCase();
+    rows.push({codigo:cod,titulo:g('titulo'),area:g('area')||'Sin clasificar',tipo:g('tipo')||'Otro',estado:g('estado')||'Vigente',version:g('version')||null,fecha:g('fecha')||null,owner:g('owner')||null,revision:g('revision')||null,regulacion:g('regulacion')||null,link:g('link')||null,notas:g('notas')||null});
   }
   if(!rows.length){showToast('No se encontraron filas válidas');return;}
   if(!confirm(`Importar ${rows.length} normas?`))return;
