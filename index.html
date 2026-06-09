@@ -1728,6 +1728,11 @@ function toggleTheme() {
 
 initTheme();
 
+// Asegurar estado inicial correcto
+document.getElementById('loginScreen').style.display = 'flex';
+document.getElementById('app').classList.remove('visible');
+
+
 // ════════════════════════════════════════
 // REPOSITORIO
 // ════════════════════════════════════════
