@@ -994,6 +994,38 @@ function goTo(mod) {
 // LOAD ALL DATA
 // ════════════════════════════════════════
 async function loadAllData() {
+  // Si no hay token, carga datos de muestra para testing local
+  if (!accessToken) {
+    normas = [
+      {id:'n1',codigo:'POL-SEC-001',titulo:'Política de Seguridad de la Información',area:'Seguridad',tipo:'Política',estado:'Vigente',version:'v3.0',fecha:'2024-03-01',owner:'CISO',revision:'2025-03-01',regulacion:'ISO 27001, BCRA A 7724',link:'',notas:''},
+      {id:'n2',codigo:'PRO-SEC-002',titulo:'Gestión de Accesos y Privilegios',area:'Seguridad',tipo:'Procedimiento',estado:'Vigente',version:'v2.1',fecha:'2024-06-15',owner:'IT Security',revision:'2025-06-15',regulacion:'BCRA A 7724',link:'',notas:''},
+      {id:'n3',codigo:'POL-OPE-001',titulo:'Política de Continuidad del Negocio',area:'Operaciones',tipo:'Política',estado:'En revisión',version:'v1.5',fecha:'2023-11-01',owner:'COO',revision:'2024-11-01',regulacion:'BCRA A 5398',link:'',notas:''},
+      {id:'n4',codigo:'MAN-RIS-001',titulo:'Manual de Gestión de Riesgo Operacional',area:'Riesgo',tipo:'Manual',estado:'Vigente',version:'v4.0',fecha:'2024-01-10',owner:'CRO',revision:'2025-01-10',regulacion:'BCRA A 5398, UIF Res. 30/2017',link:'',notas:''},
+      {id:'n5',codigo:'PRO-AML-001',titulo:'Procedimiento de Prevención de LA/FT',area:'Cumplimiento',tipo:'Procedimiento',estado:'Vigente',version:'v2.0',fecha:'2024-04-01',owner:'CCO',revision:'2025-04-01',regulacion:'UIF Res. 30/2017',link:'',notas:''},
+      {id:'n6',codigo:'EST-TEC-001',titulo:'Estándar de Hardening de Servidores',area:'Tecnología',tipo:'Estándar',estado:'Vigente',version:'v1.2',fecha:'2024-02-01',owner:'CTO',revision:'2025-02-01',regulacion:'ISO 27001',link:'',notas:''},
+    ];
+    procesos = [
+      {id:'p1',nombre:'Gestión de Accesos',area:'Seguridad',estado:'Aprobado',owner:'IT Security',descripcion:'Proceso de solicitud y aprobación de accesos',xml:'',normas_ids:['n2']},
+      {id:'p2',nombre:'Gestión de Incidentes',area:'Operaciones',estado:'En revisión',owner:'SOC',descripcion:'Detección y respuesta a incidentes',xml:'',normas_ids:['n1']},
+    ];
+    riesgos = [
+      {id:'r1',nombre:'Acceso no autorizado a sistemas críticos',descripcion:'',categoria:'Seguridad',probabilidad:4,impacto:5,nivel_riesgo:'Crítico',proceso_id:'p1',norma_id:'n1',owner:'CISO',estado:'Activo',fecha_identificacion:'2024-01-15'},
+      {id:'r2',nombre:'Falla en continuidad operacional',descripcion:'',categoria:'Operacional',probabilidad:2,impacto:5,nivel_riesgo:'Alto',proceso_id:'p2',norma_id:'n3',owner:'COO',estado:'En tratamiento',fecha_identificacion:'2024-02-01'},
+      {id:'r3',nombre:'Incumplimiento normativo UIF',descripcion:'',categoria:'Regulatorio',probabilidad:2,impacto:4,nivel_riesgo:'Medio',proceso_id:null,norma_id:'n5',owner:'CCO',estado:'Activo',fecha_identificacion:'2024-03-10'},
+    ];
+    controles = [
+      {id:'c1',nombre:'Revisión trimestral de accesos',descripcion:'',tipo:'Detectivo',frecuencia:'Trimestral',owner:'IT Security',riesgo_id:'r1',estado_test:'Efectivo',ultima_prueba:'2024-09-01'},
+      {id:'c2',nombre:'Backup diario cifrado',descripcion:'',tipo:'Preventivo',frecuencia:'Diario',owner:'Infraestructura',riesgo_id:'r2',estado_test:'Efectivo',ultima_prueba:'2024-10-01'},
+      {id:'c3',nombre:'Monitoreo de transacciones UIF',descripcion:'',tipo:'Detectivo',frecuencia:'Continuo',owner:'CCO',riesgo_id:'r3',estado_test:'Con observaciones',ultima_prueba:'2024-08-15'},
+    ];
+    hallazgos = [
+      {id:'h1',titulo:'Cuentas de usuario sin revisión hace +180 días',descripcion:'Se detectaron 23 cuentas activas sin revisión periódica',origen:'Auditoría Interna',severidad:'Alta',estado:'Abierto',proceso_id:'p1',riesgo_id:'r1',control_id:'c1',norma_id:'n2',owner:'IT Security',fecha_deteccion:'2024-10-01',fecha_limite:'2024-12-31',evidencia:''},
+      {id:'h2',titulo:'Plan de continuidad desactualizado',descripcion:'El BCP no fue revisado en 18 meses',origen:'Autodetección',severidad:'Media',estado:'En proceso',proceso_id:'p2',riesgo_id:'r2',control_id:null,norma_id:'n3',owner:'COO',fecha_deteccion:'2024-09-15',fecha_limite:'2025-01-31',evidencia:''},
+    ];
+    renderNormas(); renderBpmnList(); renderRiesgos(); renderControles(); renderHallazgos();
+    updateBadges();
+    return;
+  }
   try {
     [normas, procesos, riesgos, controles, hallazgos] = await Promise.all([
       sbFetch('/rest/v1/normas?order=area,tipo,codigo'),
@@ -1648,6 +1680,19 @@ async function execDelete(){
   }catch(e){showToast('Error: '+e.message,4000);}
 }
 
+
+
+// AUTO-LOGIN (login module disabled for testing)
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').classList.add('visible');
+  document.getElementById('userName').textContent = 'Admin';
+  document.getElementById('userRole').textContent = 'Admin / Editor';
+  document.getElementById('userAvatar').textContent = 'A';
+  userRole = 'admin';
+  applyRoleUI();
+  loadAllData().then(() => goTo('repositorio'));
+});
 
 // ════════════════════════════════════════
 // REPOSITORIO
