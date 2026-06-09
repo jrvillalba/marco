@@ -542,8 +542,9 @@
         <div class="module-header">
           <div><div class="module-title">Índice Normativo</div><div class="module-sub">Gestión del marco normativo interno</div></div>
           <div style="display:flex;gap:8px">
-            <button class="btn admin-only" onclick="normasExportCSV()"><i class="ti ti-download"></i> CSV</button>
-            <button class="btn admin-only" onclick="document.getElementById('normasImportFile').click()"><i class="ti ti-upload"></i> Importar</button>
+            <button class="btn admin-only" onclick="normasExportCSV()"><i class="ti ti-download"></i> Exportar CSV</button>
+            <button class="btn admin-only" onclick="downloadNormasTemplate()"><i class="ti ti-table"></i> Plantilla</button>
+            <button class="btn admin-only" onclick="document.getElementById('normasImportFile').click()"><i class="ti ti-upload"></i> Importar CSV</button>
             <input type="file" id="normasImportFile" accept=".csv" style="display:none" onchange="normasImportCSV(event)">
             <button class="btn btn-gold admin-only" onclick="openNormaModal()"><i class="ti ti-plus"></i> Nueva norma</button>
           </div>
@@ -1180,6 +1181,20 @@ function confirmDeleteNorma(){
   document.getElementById('confirmBg').classList.add('open');
 }
 
+
+function downloadNormasTemplate() {
+  const cols = ['codigo','titulo','area','tipo','estado','version','fecha','owner','revision','regulacion','link','notas'];
+  const labels = ['Código','Título','Área','Tipo','Estado','Versión','Fecha versión','Owner','Próxima revisión','Regulación asociada','Link al documento','Notas'];
+  const example = ['POL-SEC-001','Política de Seguridad de la Información','Seguridad','Política','Vigente','v2.0','2024-01-15','CISO','2025-01-15','BCRA A 7724, ISO 27001','https://...','Revisión anual'];
+  const csv = '\uFEFF' + [labels.join(','), example.map(v => '"' + v + '"').join(',')].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));
+  a.download = 'plantilla_indice_normativo.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('✓ Plantilla descargada — completala en Excel e importala');
+}
+
 async function normasExportCSV() {
   const cols=['codigo','titulo','area','tipo','estado','version','fecha','owner','revision','regulacion','link','notas'];
   const h=['Código','Título','Área','Tipo','Estado','Versión','Fecha','Owner','Revisión','Regulación','Link','Notas'];
@@ -1193,7 +1208,25 @@ async function normasImportCSV(event) {
   const lines=text.split(/\r?\n/).filter(l=>l.trim());
   if(lines.length<2){showToast('CSV vacío');return;}
   const rawH=lines[0].split(',').map(h=>h.replace(/^"|"$/g,'').trim().toLowerCase());
-  const cm={};['codigo','titulo','area','tipo','estado','version','fecha','owner','revision','regulacion','link','notas'].forEach(k=>{cm[k]=rawH.indexOf(k);});
+  // Mapeo de headers — acepta tanto nombres técnicos como labels con tildes
+  const HEADER_MAP = {
+    'codigo':['codigo','código','code','id','cod'],
+    'titulo':['titulo','título','title','nombre','name'],
+    'area':['area','área','dominio','domain'],
+    'tipo':['tipo','type','clase'],
+    'estado':['estado','status','vigencia'],
+    'version':['version','versión','ver','rev'],
+    'fecha':['fecha','fecha version','fecha versión','date','fecha_version'],
+    'owner':['owner','responsable','autor','dueño'],
+    'revision':['revision','revisión','proxima revision','próxima revisión','next review'],
+    'regulacion':['regulacion','regulación','regulation','norma','referencia'],
+    'link':['link','url','enlace','documento'],
+    'notas':['notas','notes','observaciones','comentarios'],
+  };
+  const cm={};
+  Object.entries(HEADER_MAP).forEach(([key, aliases]) => {
+    cm[key] = rawH.findIndex(h => aliases.some(a => h.replace(/[áàä]/g,'a').replace(/[éèë]/g,'e').replace(/[íìï]/g,'i').replace(/[óòö]/g,'o').replace(/[úùü]/g,'u').replace(/ñ/g,'n') === a.replace(/[áàä]/g,'a').replace(/[éèë]/g,'e').replace(/[íìï]/g,'i').replace(/[óòö]/g,'o').replace(/[úùü]/g,'u').replace(/ñ/g,'n')));
+  });
   if(cm.codigo<0||cm.titulo<0||cm.area<0||cm.tipo<0){showToast('⚠️ Columnas requeridas: codigo,titulo,area,tipo');return;}
   function parseLine(l){const r=[];let c='',q=false;for(const ch of l){if(ch==='"')q=!q;else if(ch===','&&!q){r.push(c.trim());c='';}else c+=ch;}r.push(c.trim());return r;}
   const rows=[];
