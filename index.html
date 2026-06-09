@@ -336,6 +336,57 @@
     .empty { padding:3rem 1rem; text-align:center; color:var(--text3); font-size:13px; }
     .empty .ti { font-size:32px; display:block; margin-bottom:10px; }
 
+
+    /* ═══════════════ REPOSITORIO ═══════════════ */
+    .repo-layout { display:grid; grid-template-columns:280px 1fr; height:100%; overflow:hidden; }
+    .repo-tree { border-right:0.5px solid var(--line); overflow-y:auto; background:var(--bg2); }
+    .repo-tree-header { padding:12px 14px; border-bottom:0.5px solid var(--line); display:flex; align-items:center; gap:8px; }
+    .repo-tree-header input { flex:1; height:28px; padding:0 8px; font-size:12px; background:var(--bg3); border:0.5px solid var(--line2); border-radius:var(--r); color:var(--text); outline:none; font-family:var(--font); }
+    .repo-domain { border-bottom:0.5px solid var(--line); }
+    .repo-domain-header { display:flex; align-items:center; gap:8px; padding:9px 12px; cursor:pointer; user-select:none; transition:background var(--trans); font-size:13px; }
+    .repo-domain-header:hover { background:var(--bg3); }
+    .repo-domain-num { font-family:var(--mono); font-size:11px; color:var(--gold); font-weight:500; min-width:20px; }
+    .repo-domain-name { flex:1; font-weight:500; }
+    .repo-domain-count { font-size:11px; color:var(--text3); }
+    .repo-type-section { padding:0 0 4px; }
+    .repo-type-label { display:flex; align-items:center; gap:6px; padding:6px 12px 4px 28px; font-size:10px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:0.06em; }
+    .repo-item { display:flex; align-items:center; gap-8px; padding:5px 12px 5px 36px; cursor:pointer; font-size:12px; color:var(--text2); transition:all var(--trans); border-left:2px solid transparent; gap:8px; }
+    .repo-item:hover { background:var(--bg3); color:var(--text); }
+    .repo-item.active { background:var(--gold-dim); color:var(--gold2); border-left-color:var(--gold); }
+    .repo-item-num { font-family:var(--mono); font-size:10px; color:var(--text3); min-width:52px; flex-shrink:0; }
+    .repo-item-name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .repo-item-type { font-size:10px; padding:1px 5px; border-radius:3px; background:var(--bg4); color:var(--text3); flex-shrink:0; }
+
+    .repo-detail { display:flex; flex-direction:column; overflow:hidden; }
+    .repo-detail-header { padding:1.25rem 1.5rem 1rem; border-bottom:0.5px solid var(--line); background:var(--bg2); flex-shrink:0; }
+    .repo-detail-header h2 { font-size:16px; font-weight:600; letter-spacing:-0.02em; margin-bottom:4px; }
+    .repo-detail-meta { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .repo-meta-pill { display:flex; align-items:center; gap:4px; font-size:11px; color:var(--text2); }
+    .repo-detail-body { flex:1; overflow-y:auto; padding:1.25rem 1.5rem; }
+
+    .repo-empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:12px; color:var(--text3); }
+    .repo-empty .ti { font-size:40px; }
+
+    .rel-tabs { display:flex; gap:2px; margin-bottom:1rem; background:var(--bg3); padding:3px; border-radius:var(--r); width:fit-content; }
+    .rel-tab { padding:5px 14px; font-size:12px; border-radius:4px; cursor:pointer; color:var(--text2); transition:all var(--trans); }
+    .rel-tab.active { background:var(--bg2); color:var(--text); box-shadow:0 1px 3px rgba(0,0,0,0.3); }
+
+    .rel-table { background:var(--bg2); border:0.5px solid var(--line); border-radius:var(--r2); overflow:hidden; }
+    .rel-row { display:flex; align-items:center; gap:10px; padding:9px 14px; border-bottom:0.5px solid var(--line); font-size:12px; cursor:pointer; transition:background var(--trans); }
+    .rel-row:last-child { border-bottom:none; }
+    .rel-row:hover { background:var(--bg3); }
+    .rel-type-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+    .rel-row-name { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .rel-empty { padding:1.5rem; text-align:center; color:var(--text3); font-size:12px; }
+
+    .repo-fields { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:1.25rem; }
+    .repo-field { background:var(--bg2); border:0.5px solid var(--line); border-radius:var(--r); padding:10px 12px; }
+    .repo-field-label { font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px; font-weight:600; }
+    .repo-field-val { font-size:13px; color:var(--text); }
+    .repo-field-val.empty { color:var(--text3); font-style:italic; }
+
+    #relGraph { width:100%; height:320px; border:0.5px solid var(--line); border-radius:var(--r2); background:var(--bg); overflow:hidden; }
+
     select option { background:var(--bg3); color:var(--text); }
 
     /* viewer mode */
@@ -412,6 +463,7 @@
         <div class="nav-item" onclick="goTo('riesgos')"><i class="ti ti-alert-triangle"></i> Riesgos</div>
         <div class="nav-item" onclick="goTo('controles')"><i class="ti ti-shield-check"></i> Controles</div>
         <div class="nav-item" onclick="goTo('hallazgos')"><i class="ti ti-bug"></i> Hallazgos <span class="nav-badge" id="badgeHallazgos" style="display:none"></span></div>
+        <div class="nav-item" onclick="goTo('repositorio')"><i class="ti ti-sitemap"></i> Repositorio</div>
         <div class="nav-label" style="margin-top:8px">Vistas</div>
         <div class="nav-item" onclick="goTo('dashboard')"><i class="ti ti-chart-bar"></i> Dashboard GRC</div>
         <div class="nav-label admin-only" style="margin-top:8px">Admin</div>
@@ -573,6 +625,54 @@
               <span>Título</span><span>Origen</span><span>Severidad</span><span>Owner</span><span>Vencimiento</span><span>Estado</span><span></span>
             </div>
             <div id="hallazgosBody"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ── REPOSITORIO ── -->
+      <div class="module" id="mod-repositorio">
+        <div class="module-header">
+          <div><div class="module-title">Repositorio GRC</div><div class="module-sub">Árbol jerárquico unificado — normas, procesos, riesgos y controles</div></div>
+          <button class="btn" onclick="repoExpandAll()"><i class="ti ti-unfold"></i> Expandir todo</button>
+        </div>
+        <div style="flex:1;overflow:hidden">
+          <div class="repo-layout" id="repoLayout">
+            <div class="repo-tree">
+              <div class="repo-tree-header">
+                <input type="text" id="repoSearch" placeholder="Buscar en repositorio..." oninput="renderRepo()">
+              </div>
+              <div id="repoTreeBody"></div>
+            </div>
+            <div class="repo-detail" id="repoDetail">
+              <div class="repo-empty" id="repoEmptyState">
+                <i class="ti ti-sitemap"></i>
+                <span style="font-size:13px">Seleccioná un elemento del árbol</span>
+              </div>
+              <div id="repoDetailContent" style="display:none;flex-direction:column;height:100%;overflow:hidden">
+                <div class="repo-detail-header">
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                    <span id="repoDetailIcon" style="font-size:18px"></span>
+                    <h2 id="repoDetailTitle"></h2>
+                  </div>
+                  <div class="repo-detail-meta" id="repoDetailMeta"></div>
+                </div>
+                <div class="repo-detail-body">
+                  <div class="repo-fields" id="repoDetailFields"></div>
+                  <div style="margin-bottom:8px">
+                    <div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">Relaciones</div>
+                    <div class="rel-tabs">
+                      <div class="rel-tab active" onclick="switchRelTab('table')">Lista</div>
+                      <div class="rel-tab" onclick="switchRelTab('graph')">Grafo</div>
+                    </div>
+                  </div>
+                  <div id="relTableView"></div>
+                  <div id="relGraphView" style="display:none">
+                    <svg id="relGraph"></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -760,6 +860,7 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bpmn-js@17.0.2/dist/bpmn-modeler.production.min.js"></script>
 <script>
 // ════════════════════════════════════════
@@ -884,6 +985,7 @@ function goTo(mod) {
   document.getElementById('topbarModule').innerHTML = `<strong>${titles[mod]||mod}</strong>`;
   currentModule = mod;
   if(mod==='bpmn' && !bpmnModeler) initBpmn();
+  if(mod==='repositorio') renderRepo();
   if(mod==='dashboard') renderDashboard();
   if(mod==='usuarios') renderUsuarios();
 }
@@ -1544,6 +1646,345 @@ async function execDelete(){
     }
     showToast('Eliminado');
   }catch(e){showToast('Error: '+e.message,4000);}
+}
+
+
+// ════════════════════════════════════════
+// REPOSITORIO
+// ════════════════════════════════════════
+
+// Domain structure — ordered, numbered
+const REPO_DOMAINS = [
+  { num:'1', name:'Estrategia y Gobierno', icon:'ti-building', types:['norma'], filter: n => n._kind==='norma' && ['Política','Resolución','Circular'].includes(n.tipo) },
+  { num:'2', name:'Procesos', icon:'ti-diagram-3', types:['proceso'], filter: n => n._kind==='proceso' },
+  { num:'3', name:'Organización', icon:'ti-users', types:['norma'], filter: n => n._kind==='norma' && ['Manual','Guía'].includes(n.tipo) },
+  { num:'4', name:'IT y Sistemas', icon:'ti-cpu', types:['norma'], filter: n => n._kind==='norma' && ['Estándar','Procedimiento','Instructivo'].includes(n.tipo) },
+  { num:'5', name:'Datos', icon:'ti-database', types:['norma'], filter: n => n._kind==='norma' && n.area && n.area.toLowerCase().includes('dato') },
+  { num:'6', name:'Productos y Servicios', icon:'ti-briefcase', types:['norma'], filter: n => false },
+  { num:'7', name:'Riesgo y Cumplimiento', icon:'ti-shield-check', types:['riesgo','control','hallazgo','norma'], filter: n => n._kind==='riesgo'||n._kind==='control'||n._kind==='hallazgo' },
+];
+
+const TYPE_META = {
+  norma:    { label:'Norma',    color:'var(--gold)',   icon:'ti-book-2'       },
+  proceso:  { label:'Proceso',  color:'var(--blue)',   icon:'ti-diagram-3'    },
+  riesgo:   { label:'Riesgo',   color:'var(--red)',    icon:'ti-alert-triangle'},
+  control:  { label:'Control',  color:'var(--green)',  icon:'ti-shield-check' },
+  hallazgo: { label:'Hallazgo', color:'var(--orange)', icon:'ti-bug'          },
+};
+
+let repoCollapsed = {};
+let repoSelected = null;
+let relTab = 'table';
+
+function getAllRepoItems() {
+  const items = [];
+  normas.forEach(n   => items.push({...n, _kind:'norma',    _name:n.titulo,  _code:n.codigo}));
+  procesos.forEach(p => items.push({...p, _kind:'proceso',  _name:p.nombre,  _code:p.area||''}));
+  riesgos.forEach(r  => items.push({...r, _kind:'riesgo',   _name:r.nombre,  _code:r.categoria||''}));
+  controles.forEach(c=> items.push({...c, _kind:'control',  _name:c.nombre,  _code:c.tipo||''}));
+  hallazgos.forEach(h=> items.push({...h, _kind:'hallazgo', _name:h.titulo,  _code:h.severidad||''}));
+  return items;
+}
+
+// Assign item to domain — item can appear in multiple
+function getItemDomains(item) {
+  return REPO_DOMAINS.filter(d => d.filter(item));
+}
+
+// Fallback domain — by area for normas not matched
+function getFallbackDomain(item) {
+  if(item._kind === 'norma') {
+    // put normas not matched in domain 4 (IT) by default
+    return REPO_DOMAINS[3];
+  }
+  return null;
+}
+
+function getItemsByDomain(domainNum, allItems) {
+  const domain = REPO_DOMAINS.find(d => d.num === domainNum);
+  if(!domain) return [];
+  const matched = allItems.filter(i => domain.filter(i));
+  // if it's normas domain and no type match, add orphan normas
+  if(domainNum === '4') {
+    const otherDomainNormaIds = new Set();
+    REPO_DOMAINS.filter(d => d.num !== '4').forEach(d => {
+      allItems.filter(i => i._kind==='norma' && d.filter(i)).forEach(i => otherDomainNormaIds.add(i.id));
+    });
+    const orphans = allItems.filter(i => i._kind==='norma' && !otherDomainNormaIds.has(i.id));
+    const ids = new Set(matched.map(i=>i.id));
+    orphans.forEach(i => { if(!ids.has(i.id)) matched.push(i); });
+  }
+  return matched;
+}
+
+function groupByType(items) {
+  const groups = {};
+  items.forEach(i => {
+    const k = i._kind;
+    if(!groups[k]) groups[k] = [];
+    groups[k].push(i);
+  });
+  return groups;
+}
+
+function renderRepo() {
+  const q = document.getElementById('repoSearch').value.toLowerCase();
+  const allItems = getAllRepoItems();
+  const filtered = q ? allItems.filter(i => JSON.stringify(i).toLowerCase().includes(q)) : allItems;
+
+  const body = document.getElementById('repoTreeBody');
+  let html = '';
+
+  REPO_DOMAINS.forEach((domain, di) => {
+    const items = getItemsByDomain(domain.num, filtered);
+    if(!items.length && !q) return; // hide empty domains when not searching
+    const isCollapsed = repoCollapsed[domain.num];
+    const groups = groupByType(items);
+    const total = items.length;
+
+    html += `<div class="repo-domain">
+      <div class="repo-domain-header" onclick="toggleRepoDomain('${domain.num}')">
+        <span class="repo-domain-num">${domain.num}.</span>
+        <i class="ti ${domain.icon}" style="font-size:14px;color:var(--text3)"></i>
+        <span class="repo-domain-name">${esc(domain.name)}</span>
+        <span class="repo-domain-count">${total}</span>
+        <i class="ti ti-chevron-down" style="font-size:13px;color:var(--text3);transition:transform 0.2s;transform:${isCollapsed?'rotate(-90deg)':''}"></i>
+      </div>`;
+
+    if(!isCollapsed) {
+      html += `<div class="repo-type-section">`;
+      Object.entries(groups).forEach(([kind, kindItems]) => {
+        const meta = TYPE_META[kind];
+        // sort by code
+        kindItems.sort((a,b) => (a._code||'').localeCompare(b._code||''));
+        html += `<div class="repo-type-label"><i class="ti ${meta.icon}" style="color:${meta.color};font-size:11px"></i>${meta.label}s (${kindItems.length})</div>`;
+        kindItems.forEach((item, idx) => {
+          const numStr = `${domain.num}.${(di+1)}.${String(idx+1).padStart(3,'0')}`;
+          const isActive = repoSelected && repoSelected.id === item.id;
+          html += `<div class="repo-item${isActive?' active':''}" onclick="selectRepoItem('${item.id}','${kind}')">
+            <span class="repo-item-num">${item._code || numStr}</span>
+            <span class="repo-item-name" title="${esc(item._name)}">${esc(item._name)}</span>
+            <span class="repo-item-type" style="background:${meta.color}22;color:${meta.color}">${esc(item._code||kind)}</span>
+          </div>`;
+        });
+      });
+      html += `</div>`;
+    }
+    html += `</div>`;
+  });
+
+  body.innerHTML = html || '<div class="rel-empty">Sin resultados</div>';
+}
+
+function toggleRepoDomain(num) {
+  repoCollapsed[num] = !repoCollapsed[num];
+  renderRepo();
+}
+
+function repoExpandAll() {
+  repoCollapsed = {};
+  renderRepo();
+}
+
+function selectRepoItem(id, kind) {
+  const allItems = getAllRepoItems();
+  const item = allItems.find(i => i.id === id && i._kind === kind);
+  if(!item) return;
+  repoSelected = item;
+  renderRepo();
+  showRepoDetail(item);
+}
+
+function showRepoDetail(item) {
+  const meta = TYPE_META[item._kind];
+  document.getElementById('repoEmptyState').style.display = 'none';
+  const dc = document.getElementById('repoDetailContent');
+  dc.style.display = 'flex';
+
+  // Icon + title
+  document.getElementById('repoDetailIcon').className = `ti ${meta.icon}`;
+  document.getElementById('repoDetailIcon').style.color = meta.color;
+  document.getElementById('repoDetailTitle').textContent = item._name;
+
+  // Meta pills
+  const pills = [];
+  pills.push(`<span class="badge" style="background:${meta.color}22;color:${meta.color}">${meta.label}</span>`);
+  if(item.area)   pills.push(`<span class="repo-meta-pill"><i class="ti ti-folder" style="font-size:12px"></i>${esc(item.area)}</span>`);
+  if(item.estado) pills.push(`<span class="repo-meta-pill"><i class="ti ti-circle-dot" style="font-size:12px"></i>${esc(item.estado)}</span>`);
+  if(item.owner)  pills.push(`<span class="repo-meta-pill"><i class="ti ti-user" style="font-size:12px"></i>${esc(item.owner)}</span>`);
+  document.getElementById('repoDetailMeta').innerHTML = pills.join('');
+
+  // Fields grid
+  const fields = getDetailFields(item);
+  document.getElementById('repoDetailFields').innerHTML = fields.map(f => `
+    <div class="repo-field">
+      <div class="repo-field-label">${esc(f.label)}</div>
+      <div class="repo-field-val${f.val?'':' empty'}">${f.val ? esc(String(f.val)) : '—'}</div>
+    </div>`).join('');
+
+  renderRelations(item);
+}
+
+function getDetailFields(item) {
+  if(item._kind === 'norma') return [
+    {label:'Código',       val:item.codigo},
+    {label:'Tipo',         val:item.tipo},
+    {label:'Versión',      val:item.version},
+    {label:'Fecha',        val:item.fecha},
+    {label:'Regulación',   val:item.regulacion},
+    {label:'Próx. revisión',val:item.revision},
+  ];
+  if(item._kind === 'proceso') return [
+    {label:'Área',         val:item.area},
+    {label:'Estado',       val:item.estado},
+    {label:'Owner',        val:item.owner},
+    {label:'Descripción',  val:item.descripcion},
+  ];
+  if(item._kind === 'riesgo') return [
+    {label:'Categoría',    val:item.categoria},
+    {label:'Probabilidad', val:item.probabilidad},
+    {label:'Impacto',      val:item.impacto},
+    {label:'Nivel',        val:item.nivel_riesgo},
+    {label:'Estado',       val:item.estado},
+    {label:'Fecha',        val:item.fecha_identificacion},
+  ];
+  if(item._kind === 'control') return [
+    {label:'Tipo',         val:item.tipo},
+    {label:'Frecuencia',   val:item.frecuencia},
+    {label:'Owner',        val:item.owner},
+    {label:'Estado test',  val:item.estado_test},
+    {label:'Última prueba',val:item.ultima_prueba},
+  ];
+  if(item._kind === 'hallazgo') return [
+    {label:'Origen',       val:item.origen},
+    {label:'Severidad',    val:item.severidad},
+    {label:'Estado',       val:item.estado},
+    {label:'Detección',    val:item.fecha_deteccion},
+    {label:'Vencimiento',  val:item.fecha_limite},
+    {label:'Owner',        val:item.owner},
+  ];
+  return [];
+}
+
+function getRelations(item) {
+  const rels = [];
+  const add = (relItem, relKind, relLabel) => {
+    if(!relItem) return;
+    const meta = TYPE_META[relKind];
+    rels.push({ id:relItem.id, kind:relKind, name:relItem._name||relItem.nombre||relItem.titulo, label:relLabel, color:meta.color, icon:meta.icon });
+  };
+
+  if(item._kind === 'norma') {
+    riesgos.filter(r=>r.norma_id===item.id).forEach(r=>add({...r,_name:r.nombre},'riesgo','Riesgo asociado'));
+    hallazgos.filter(h=>h.norma_id===item.id).forEach(h=>add({...h,_name:h.titulo},'hallazgo','Hallazgo asociado'));
+    procesos.filter(p=>(p.normas_ids||[]).includes(item.id)).forEach(p=>add({...p,_name:p.nombre},'proceso','Proceso vinculado'));
+  }
+  if(item._kind === 'proceso') {
+    riesgos.filter(r=>r.proceso_id===item.id).forEach(r=>add({...r,_name:r.nombre},'riesgo','Riesgo asociado'));
+    hallazgos.filter(h=>h.proceso_id===item.id).forEach(h=>add({...h,_name:h.titulo},'hallazgo','Hallazgo asociado'));
+    const vinculadas = (item.normas_ids||[]).map(nid=>normas.find(n=>n.id===nid)).filter(Boolean);
+    vinculadas.forEach(n=>add({...n,_name:n.titulo},'norma','Norma vinculada'));
+  }
+  if(item._kind === 'riesgo') {
+    const norma=normas.find(n=>n.id===item.norma_id); add({...norma,_name:norma?.titulo},'norma','Norma vinculada');
+    const proc=procesos.find(p=>p.id===item.proceso_id); add({...proc,_name:proc?.nombre},'proceso','Proceso vinculado');
+    controles.filter(c=>c.riesgo_id===item.id).forEach(c=>add({...c,_name:c.nombre},'control','Control asociado'));
+    hallazgos.filter(h=>h.riesgo_id===item.id).forEach(h=>add({...h,_name:h.titulo},'hallazgo','Hallazgo asociado'));
+  }
+  if(item._kind === 'control') {
+    const riesgo=riesgos.find(r=>r.id===item.riesgo_id); add({...riesgo,_name:riesgo?.nombre},'riesgo','Riesgo asociado');
+    hallazgos.filter(h=>h.control_id===item.id).forEach(h=>add({...h,_name:h.titulo},'hallazgo','Hallazgo asociado'));
+  }
+  if(item._kind === 'hallazgo') {
+    const norma=normas.find(n=>n.id===item.norma_id); if(norma) add({...norma,_name:norma.titulo},'norma','Norma vinculada');
+    const proc=procesos.find(p=>p.id===item.proceso_id); if(proc) add({...proc,_name:proc.nombre},'proceso','Proceso vinculado');
+    const riesgo=riesgos.find(r=>r.id===item.riesgo_id); if(riesgo) add({...riesgo,_name:riesgo.nombre},'riesgo','Riesgo vinculado');
+    const ctrl=controles.find(c=>c.id===item.control_id); if(ctrl) add({...ctrl,_name:ctrl.nombre},'control','Control vinculado');
+  }
+  return rels.filter(r=>r.name);
+}
+
+function renderRelations(item) {
+  const rels = getRelations(item);
+  renderRelTable(rels);
+  if(relTab === 'graph') renderRelGraph(item, rels);
+}
+
+function renderRelTable(rels) {
+  const el = document.getElementById('relTableView');
+  if(!rels.length) { el.innerHTML='<div class="rel-table"><div class="rel-empty">Sin relaciones registradas</div></div>'; return; }
+  el.innerHTML = `<div class="rel-table">${rels.map(r=>`
+    <div class="rel-row" onclick="selectRepoItem('${r.id}','${r.kind}')">
+      <div class="rel-type-dot" style="background:${r.color}"></div>
+      <span style="font-size:10px;color:${r.color};min-width:80px">${esc(r.label)}</span>
+      <span class="rel-row-name">${esc(r.name)}</span>
+      <i class="ti ti-chevron-right" style="font-size:12px;color:var(--text3)"></i>
+    </div>`).join('')}</div>`;
+}
+
+function renderRelGraph(centerItem, rels) {
+  const svg = d3.select('#relGraph');
+  svg.selectAll('*').remove();
+  const el = document.getElementById('relGraph');
+  const W = el.clientWidth || 600;
+  const H = 320;
+  svg.attr('viewBox', `0 0 ${W} ${H}`);
+
+  if(!rels.length) {
+    svg.append('text').attr('x',W/2).attr('y',H/2).attr('text-anchor','middle').attr('fill','#5c5a56').attr('font-size',13).text('Sin relaciones');
+    return;
+  }
+
+  const centerMeta = TYPE_META[centerItem._kind];
+  const nodes = [
+    { id: centerItem.id, name: centerItem._name, kind: centerItem._kind, color: centerMeta.color, r: 28, center: true },
+    ...rels.map(r => ({ id: r.id+'_'+r.kind, name: r.name, kind: r.kind, color: r.color, r: 18, center: false }))
+  ];
+  const links = rels.map(r => ({ source: centerItem.id, target: r.id+'_'+r.kind }));
+
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(110))
+    .force('charge', d3.forceManyBody().strength(-200))
+    .force('center', d3.forceCenter(W/2, H/2))
+    .force('collision', d3.forceCollide().radius(d=>d.r+16));
+
+  const link = svg.append('g').selectAll('line').data(links).join('line')
+    .attr('stroke','rgba(255,255,255,0.1)').attr('stroke-width',1.5);
+
+  const node = svg.append('g').selectAll('g').data(nodes).join('g')
+    .style('cursor','pointer')
+    .on('click', (e,d) => { if(!d.center) selectRepoItem(d.id.replace('_'+d.kind,''), d.kind); });
+
+  node.append('circle')
+    .attr('r', d=>d.r)
+    .attr('fill', d => d.color+'22')
+    .attr('stroke', d => d.color)
+    .attr('stroke-width', d => d.center ? 2 : 1);
+
+  node.append('text')
+    .attr('text-anchor','middle').attr('dy','0.35em')
+    .attr('fill', d => d.color)
+    .attr('font-size', d => d.center ? 10 : 9)
+    .attr('font-family','DM Sans,sans-serif')
+    .text(d => d.name.length > 14 ? d.name.slice(0,13)+'…' : d.name);
+
+  sim.on('tick', () => {
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y)
+        .attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('transform', d => {
+      const x = Math.max(d.r, Math.min(W-d.r, d.x));
+      const y = Math.max(d.r, Math.min(H-d.r, d.y));
+      return `translate(${x},${y})`;
+    });
+  });
+}
+
+function switchRelTab(tab) {
+  relTab = tab;
+  document.querySelectorAll('.rel-tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='table')||(i===1&&tab==='graph')));
+  document.getElementById('relTableView').style.display = tab==='table' ? 'block' : 'none';
+  document.getElementById('relGraphView').style.display = tab==='graph' ? 'block' : 'none';
+  if(tab==='graph' && repoSelected) renderRelGraph(repoSelected, getRelations(repoSelected));
 }
 
 // ════════════════════════════════════════
